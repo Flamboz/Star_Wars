@@ -1,24 +1,7 @@
 import { useEffect, useState } from "react";
-
-type Person = {
-  birth_year: string;
-  created: string;
-  edited: string;
-  eye_color: string;
-  films: number[];
-  gender: string;
-  hair_color: string;
-  height: string;
-  homeworld: number;
-  id: number;
-  mass: string;
-  name: string;
-  skin_color: string;
-  species: number[];
-  starships: number[];
-  url: string;
-  vehicles: number[];
-};
+import List from "./components/List";
+import { Person } from "./types";
+import "./App.css";
 
 type FetchPeopleStateHandlers = {
   setPeople: React.Dispatch<React.SetStateAction<Person[]>>;
@@ -61,7 +44,7 @@ const fetchPeopleData = (url: string, handlers: FetchPeopleStateHandlers) => {
 
 function App() {
   const [people, setPeople] = useState<Person[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [previousPeopleURL, setPreviousPeopleURL] = useState<string | null>(
     null
@@ -103,25 +86,28 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="wrapper">
       {isLoading && <div>Loading...</div>}
       {isError && <div>Oops, something went wrong. Try again later</div>}
-      {!isLoading &&
-        !isError &&
-        people.map((person) => {
-          return <div key={person.id}>{person.name}</div>;
-        })}
-      <footer>
-        <button
-          onClick={goToPrevious}
-          disabled={!previousPeopleURL || isLoading}
-        >
-          Previous
-        </button>
-        <button onClick={goToNext} disabled={!nextPeopleURL || isLoading}>
-          Next
-        </button>
-      </footer>
+      {!isLoading && !isError && <List people={people} />}
+      {!isLoading && (
+        <footer className="footer">
+          <button
+            className="footer__button"
+            onClick={goToPrevious}
+            disabled={!previousPeopleURL || isLoading}
+          >
+            Previous
+          </button>
+          <button
+            className="footer__button"
+            onClick={goToNext}
+            disabled={!nextPeopleURL || isLoading}
+          >
+            Next
+          </button>
+        </footer>
+      )}
     </div>
   );
 }

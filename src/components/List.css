@@ -1,0 +1,35 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.list__person {
+  width: calc(20% - 1rem);
+  background-color: #1d1e1f;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.list__person-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 1;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.list__person-name {
+  font-weight: 700;
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.list__person:hover {
+  color: #ffe81f;
+  text-shadow: 0 0 1px rgba(255, 232, 31, 0.7), 0 0 4px rgba(255, 232, 31, 0.6),
+    0 0 6px rgba(255, 232, 31, 0.4), 0 0 8px rgba(255, 232, 31, 0.3);
+}

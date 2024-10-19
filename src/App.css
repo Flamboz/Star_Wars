@@ -1,0 +1,43 @@
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.footer__button {
+  background-color: #000;
+  color: #ffe81f;
+  border: 2px solid #ffe81f;
+  padding: 0.75rem 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.footer__button:hover {
+  background-color: #ffe81f;
+  color: #000;
+}
+
+.footer__button:disabled {
+  background-color: #444;
+  border-color: #444;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
