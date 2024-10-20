@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Person } from "../types";
 
-export const useFetchPeople = (initialUrl: string) => {
+export const useFetchPeople = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -27,8 +27,8 @@ export const useFetchPeople = (initialUrl: string) => {
   }, []);
 
   useEffect(() => {
-    fetchPeopleData(initialUrl);
-  }, [initialUrl, fetchPeopleData]);
+    fetchPeopleData("https://sw-api.starnavi.io/people/");
+  }, [fetchPeopleData]);
 
   return { people, isLoading, isError, previousURL, nextURL, fetchPeopleData };
 };

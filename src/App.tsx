@@ -9,7 +9,7 @@ import Loader from "./components/Loader";
 
 function App() {
   const { people, isLoading, isError, previousURL, nextURL, fetchPeopleData } =
-    useFetchPeople("https://sw-api.starnavi.io/people/");
+    useFetchPeople();
   const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
