@@ -1,12 +1,12 @@
 import { Handle, Position } from "@xyflow/react";
 import "./CustomNode.css";
-import { NodeData } from "../types";
+import { NodeData } from "../../../types";
 
-interface ICustomNode {
+interface CustomNodeProps {
   data: NodeData;
 }
 
-const CustomNode = ({ data }: ICustomNode) => {
+const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
   return (
     <div className="node">
       {data.imageUrl && (

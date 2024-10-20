@@ -1,12 +1,15 @@
-import { Person } from "../types";
-import "./List.css";
+import { Person } from "../../types";
+import "./PeopleList.css";
 
-interface IList {
+interface PeopleListProps {
   people: Person[];
   setSelectedPersonId: (id: number) => void;
 }
 
-const List = ({ people, setSelectedPersonId }: IList) => {
+const PeopleList: React.FC<PeopleListProps> = ({
+  people,
+  setSelectedPersonId,
+}) => {
   const handleClick = (person: Person) => {
     setSelectedPersonId(person.id);
   };
@@ -33,4 +36,4 @@ const List = ({ people, setSelectedPersonId }: IList) => {
   );
 };
 
-export default List;
+export default PeopleList;

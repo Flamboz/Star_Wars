@@ -1,17 +1,19 @@
 import { useMemo, useState } from "react";
-import List from "./components/List";
+import PeopleList from "./components/PeopleList/PeopleList";
 import "./App.css";
-import GraphModal from "./components/GraphModal";
 import { useFetchPeople } from "./hooks/useFetchPeople";
 import { useFetchDetails } from "./hooks/useFetchDetails";
 import { createNodesAndEdges } from "./utils/createNodesAndEdges";
-import Loader from "./components/Loader";
+import Loader from "./components/Loader/Loader";
+import Modal from "./components/Modal/Modal";
+import Graph from "./components/Graph/Graph";
+import ListControls from "./components/ListControls/ListControls";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 function App() {
   const { people, isLoading, isError, previousURL, nextURL, fetchPeopleData } =
     useFetchPeople();
   const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { person, films, starships, isDetailsLoading } = useFetchDetails(
     selectedPersonId,
@@ -24,7 +26,6 @@ function App() {
   );
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedPersonId(null);
   };
 
@@ -34,39 +35,36 @@ function App() {
 
   const handlePersonSelect = (id: number) => {
     setSelectedPersonId(id);
-    setIsModalOpen(true);
   };
 
   return (
     <div className="wrapper">
       {isLoading && <Loader />}
-      {isError && <div>Oops, something went wrong. Try again later</div>}
+      {isError && <ErrorMessage />}
       {!isLoading && !isError && (
-        <List people={people} setSelectedPersonId={handlePersonSelect} />
+        <>
+          <PeopleList
+            people={people}
+            setSelectedPersonId={handlePersonSelect}
+          />
+          <Modal isModalOpen={Boolean(selectedPersonId)} onClose={closeModal}>
+            <Graph
+              nodes={nodes}
+              edges={edges}
+              isDetailsLoading={isDetailsLoading}
+            />
+          </Modal>
+          <footer className="footer">
+            <ListControls
+              previousURL={previousURL}
+              nextURL={nextURL}
+              isLoading={isLoading}
+              onPrevious={() => handlePagination(previousURL)}
+              onNext={() => handlePagination(nextURL)}
+            />
+          </footer>
+        </>
       )}
-      <GraphModal
-        isModalOpen={isModalOpen}
-        onClose={closeModal}
-        nodes={nodes}
-        edges={edges}
-        isDetailsLoading={isDetailsLoading}
-      />
-      <footer className="footer">
-        <button
-          className="footer__button"
-          onClick={() => handlePagination(previousURL)}
-          disabled={!previousURL || isLoading}
-        >
-          Previous
-        </button>
-        <button
-          className="footer__button"
-          onClick={() => handlePagination(nextURL)}
-          disabled={!nextURL || isLoading}
-        >
-          Next
-        </button>
-      </footer>
     </div>
   );
 }

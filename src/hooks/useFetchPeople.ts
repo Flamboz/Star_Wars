@@ -13,10 +13,15 @@ export const useFetchPeople = () => {
       setIsLoading(true);
       const response = await fetch(url);
       const data = await response.json();
-      setPeople(data.results);
-      setPreviousURL(data.previous);
-      setNextURL(data.next);
-      setIsError(false);
+
+      if (Array.isArray(data.results)) {
+        setPeople(data.results);
+        setPreviousURL(data.previous);
+        setNextURL(data.next);
+        setIsError(false);
+      } else {
+        throw new Error("Fetched data is not an array");
+      }
     } catch (error) {
       setPeople([]);
       setIsError(true);
