@@ -12,7 +12,7 @@ function App() {
   const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { person, films, starships } = useFetchDetails(
+  const { person, films, starships, isDetailsLoading } = useFetchDetails(
     selectedPersonId,
     people
   );
@@ -33,9 +33,7 @@ function App() {
 
   const handlePersonSelect = (id: number) => {
     setSelectedPersonId(id);
-    setTimeout(() => {
-      setIsModalOpen(true);
-    }, 300);
+    setIsModalOpen(true);
   };
 
   return (
@@ -50,6 +48,7 @@ function App() {
         onClose={closeModal}
         nodes={nodes}
         edges={edges}
+        isDetailsLoading={isDetailsLoading}
       />
       <footer className="footer">
         <button

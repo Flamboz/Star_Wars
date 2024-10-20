@@ -10,10 +10,18 @@ interface IGraphModal {
   onClose: () => void;
   nodes: Node[];
   edges: Edge[];
+  isDetailsLoading: boolean;
 }
 
-const GraphModal = ({ isModalOpen, onClose, nodes, edges }: IGraphModal) => {
+const GraphModal = ({
+  isModalOpen,
+  onClose,
+  nodes,
+  edges,
+  isDetailsLoading,
+}: IGraphModal) => {
   const closeModal = () => onClose();
+  console.log(nodes);
 
   return (
     <>
@@ -24,16 +32,21 @@ const GraphModal = ({ isModalOpen, onClose, nodes, edges }: IGraphModal) => {
               &times;
             </span>
             <div className="graph-modal__graph">
-              <ReactFlow
-                nodeTypes={{ custom: CustomNode }}
-                edgeTypes={{ custom: CustomEdge }}
-                nodes={nodes}
-                edges={edges}
-                fitView
-              >
-                <Controls />
-                <Background />
-              </ReactFlow>
+              {!isDetailsLoading ? (
+                <ReactFlow
+                  nodeTypes={{ custom: CustomNode }}
+                  edgeTypes={{ custom: CustomEdge }}
+                  nodes={nodes}
+                  edges={edges}
+                  fitView
+                  minZoom={0.1}
+                >
+                  <Controls />
+                  <Background />
+                </ReactFlow>
+              ) : (
+                <div>Loading...</div>
+              )}
             </div>
           </div>
         </div>

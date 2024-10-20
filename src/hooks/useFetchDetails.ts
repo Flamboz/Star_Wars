@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
-import { Person } from "../types";
+import { Film, Person, Starship } from "../types";
 
 export const useFetchDetails = (
   selectedPersonId: number | null,
   people: Person[]
 ) => {
   const [person, setPerson] = useState<Person | null>(null);
-  const [films, setFilms] = useState<any[] | null>(null);
-  const [starships, setStarships] = useState<any[] | null>(null);
+  const [films, setFilms] = useState<Film[] | null>(null);
+  const [starships, setStarships] = useState<Starship[] | null>(null);
+  const [isDetailsLoading, setIsDetailsLoading] = useState(false);
 
   useEffect(() => {
     if (!selectedPersonId) return;
 
     const selectedPerson = people.find((p) => p.id === selectedPersonId);
-    setPerson(selectedPerson);
+
+    if (selectedPerson) {
+      setPerson(selectedPerson);
+    }
 
     if (!selectedPerson) return;
 
     const fetchDetails = async () => {
       try {
+        setIsDetailsLoading(true);
         const [filmsData, starshipsData] = await Promise.all([
           Promise.all(
             selectedPerson.films.map((id) =>
@@ -39,11 +44,13 @@ export const useFetchDetails = (
         setStarships(starshipsData);
       } catch (error) {
         console.error("Error fetching details:", error);
+      } finally {
+        setIsDetailsLoading(false);
       }
     };
 
     fetchDetails();
   }, [selectedPersonId, people]);
 
-  return { person, films, starships };
+  return { person, films, starships, isDetailsLoading };
 };
