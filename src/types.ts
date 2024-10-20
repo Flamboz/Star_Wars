@@ -58,11 +58,20 @@ export type Starship = {
   url: string;
 };
 
+export type Info = {
+  label: string;
+  value: string | number;
+};
+
+export type NodeData = {
+  id?: string;
+  info?: Info[];
+  imageUrl?: string;
+};
+
 export type Node = {
   id: string;
-  data: {
-    label: string;
-  };
+  data: NodeData;
   position: {
     x: number;
     y: number;
