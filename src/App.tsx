@@ -1,113 +1,67 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import List from "./components/List";
-import { Person } from "./types";
 import "./App.css";
-
-type FetchPeopleStateHandlers = {
-  setPeople: React.Dispatch<React.SetStateAction<Person[]>>;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
-  setPreviousPeopleURL: React.Dispatch<React.SetStateAction<string | null>>;
-  setNextPeopleURL: React.Dispatch<React.SetStateAction<string | null>>;
-};
-
-const fetchPeopleData = (url: string, handlers: FetchPeopleStateHandlers) => {
-  const {
-    setPeople,
-    setIsLoading,
-    setIsError,
-    setPreviousPeopleURL,
-    setNextPeopleURL,
-  } = handlers;
-
-  setIsLoading(true);
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      setPeople(data.results);
-      setIsLoading(false);
-      setIsError(false);
-      setPreviousPeopleURL(data.previous);
-      setNextPeopleURL(data.next);
-      console.log(data);
-    })
-    .catch((error) => {
-      setPeople([]);
-      setIsError(true);
-      console.log("Error fetching: ", error);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
-};
+import GraphModal from "./components/GraphModal";
+import { useFetchPeople } from "./hooks/useFetchPeople";
+import { useFetchDetails } from "./hooks/useFetchDetails";
+import { createNodesAndEdges } from "./utils/createNodesAndEdges";
 
 function App() {
-  const [people, setPeople] = useState<Person[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [previousPeopleURL, setPreviousPeopleURL] = useState<string | null>(
-    null
+  const { people, isLoading, isError, previousURL, nextURL, fetchPeopleData } =
+    useFetchPeople("https://sw-api.starnavi.io/people/");
+  const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { person, films, starships } = useFetchDetails(
+    selectedPersonId,
+    people
   );
-  const [nextPeopleURL, setNextPeopleURL] = useState<string | null>(null);
+  const { nodes, edges } = createNodesAndEdges(person, films, starships);
 
-  const goToPrevious = () => {
-    if (previousPeopleURL) {
-      fetchPeopleData(previousPeopleURL, {
-        setPeople,
-        setIsLoading,
-        setIsError,
-        setPreviousPeopleURL,
-        setNextPeopleURL,
-      });
-    }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPersonId(null);
   };
 
-  const goToNext = () => {
-    if (nextPeopleURL) {
-      fetchPeopleData(nextPeopleURL, {
-        setPeople,
-        setIsLoading,
-        setIsError,
-        setPreviousPeopleURL,
-        setNextPeopleURL,
-      });
-    }
+  const handlePagination = (url: string | null) => {
+    if (url) fetchPeopleData(url);
   };
-
-  useEffect(() => {
-    fetchPeopleData("https://sw-api.starnavi.io/people/", {
-      setPeople,
-      setIsLoading,
-      setIsError,
-      setPreviousPeopleURL,
-      setNextPeopleURL,
-    });
-  }, []);
 
   return (
     <div className="wrapper">
       {isLoading && <div>Loading...</div>}
       {isError && <div>Oops, something went wrong. Try again later</div>}
-      {!isLoading && !isError && <List people={people} />}
-      {!isLoading && (
-        <footer className="footer">
-          <button
-            className="footer__button"
-            onClick={goToPrevious}
-            disabled={!previousPeopleURL || isLoading}
-          >
-            Previous
-          </button>
-          <button
-            className="footer__button"
-            onClick={goToNext}
-            disabled={!nextPeopleURL || isLoading}
-          >
-            Next
-          </button>
-        </footer>
+      {!isLoading && !isError && (
+        <List
+          people={people}
+          setSelectedPersonId={(id) => {
+            setSelectedPersonId(id);
+            setIsModalOpen(true);
+          }}
+        />
       )}
+      <GraphModal
+        isModalOpen={isModalOpen}
+        onClose={closeModal}
+        nodes={nodes}
+        edges={edges}
+      />
+      <footer className="footer">
+        <button
+          className="footer__button"
+          onClick={() => handlePagination(previousURL)}
+          disabled={!previousURL || isLoading}
+        >
+          Previous
+        </button>
+        <button
+          className="footer__button"
+          onClick={() => handlePagination(nextURL)}
+          disabled={!nextURL || isLoading}
+        >
+          Next
+        </button>
+      </footer>
     </div>
   );
 }
