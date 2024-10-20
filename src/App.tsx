@@ -5,6 +5,7 @@ import GraphModal from "./components/GraphModal";
 import { useFetchPeople } from "./hooks/useFetchPeople";
 import { useFetchDetails } from "./hooks/useFetchDetails";
 import { createNodesAndEdges } from "./utils/createNodesAndEdges";
+import Loader from "./components/Loader";
 
 function App() {
   const { people, isLoading, isError, previousURL, nextURL, fetchPeopleData } =
@@ -38,7 +39,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <Loader />}
       {isError && <div>Oops, something went wrong. Try again later</div>}
       {!isLoading && !isError && (
         <List people={people} setSelectedPersonId={handlePersonSelect} />

@@ -4,6 +4,7 @@ import "./GraphModal.css";
 import { Node, Edge } from "../types";
 import CustomNode from "./CustomNode";
 import CustomEdge from "./CustomEdge";
+import Loader from "./Loader";
 
 interface IGraphModal {
   isModalOpen: boolean;
@@ -45,7 +46,7 @@ const GraphModal = ({
                   <Background />
                 </ReactFlow>
               ) : (
-                <div>Loading...</div>
+                <Loader />
               )}
             </div>
           </div>
