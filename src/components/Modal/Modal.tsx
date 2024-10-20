@@ -43,9 +43,17 @@ const Modal: React.FC<ModalProps> = ({ isModalOpen, onClose, children }) => {
   }, [isModalOpen, handleKeyDown, handleClickOutside]);
 
   return (
-    <div className={`modal ${!isModalOpen && "modal_hidden"}`}>
+    <div
+      className={`modal ${!isModalOpen && "modal_hidden"}`}
+      aria-hidden={!isModalOpen}
+      data-testid="modal"
+    >
       <div className="modal__content">
-        <button className="modal__close" onClick={closeModal}>
+        <button
+          className="modal__close"
+          onClick={closeModal}
+          data-testid="close-modal"
+        >
           &times;
         </button>
         {children}
