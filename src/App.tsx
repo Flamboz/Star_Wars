@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import List from "./components/List";
 import "./App.css";
 import GraphModal from "./components/GraphModal";
@@ -16,7 +16,11 @@ function App() {
     selectedPersonId,
     people
   );
-  const { nodes, edges } = createNodesAndEdges(person, films, starships);
+
+  const { nodes, edges } = useMemo(
+    () => createNodesAndEdges(person, films, starships),
+    [person, films, starships]
+  );
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -27,18 +31,19 @@ function App() {
     if (url) fetchPeopleData(url);
   };
 
+  const handlePersonSelect = (id: number) => {
+    setSelectedPersonId(id);
+    setTimeout(() => {
+      setIsModalOpen(true);
+    }, 300);
+  };
+
   return (
     <div className="wrapper">
       {isLoading && <div>Loading...</div>}
       {isError && <div>Oops, something went wrong. Try again later</div>}
       {!isLoading && !isError && (
-        <List
-          people={people}
-          setSelectedPersonId={(id) => {
-            setSelectedPersonId(id);
-            setIsModalOpen(true);
-          }}
-        />
+        <List people={people} setSelectedPersonId={handlePersonSelect} />
       )}
       <GraphModal
         isModalOpen={isModalOpen}
