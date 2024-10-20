@@ -16,7 +16,7 @@ const ListControls: React.FC<ListControlsProps> = ({
   onNext,
 }) => {
   return (
-    <>
+    <footer className="footer">
       <button
         className="control"
         onClick={onPrevious}
@@ -31,7 +31,7 @@ const ListControls: React.FC<ListControlsProps> = ({
       >
         Next
       </button>
-    </>
+    </footer>
   );
 };
 

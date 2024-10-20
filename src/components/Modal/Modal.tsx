@@ -43,18 +43,14 @@ const Modal: React.FC<ModalProps> = ({ isModalOpen, onClose, children }) => {
   }, [isModalOpen, handleKeyDown, handleClickOutside]);
 
   return (
-    <>
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal__content">
-            <button className="modal__close" onClick={closeModal}>
-              &times;
-            </button>
-            {children}
-          </div>
-        </div>
-      )}
-    </>
+    <div className={`modal ${!isModalOpen && "modal_hidden"}`}>
+      <div className="modal__content">
+        <button className="modal__close" onClick={closeModal}>
+          &times;
+        </button>
+        {children}
+      </div>
+    </div>
   );
 };
 

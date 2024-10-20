@@ -1,11 +1,12 @@
 .error-message {
+  max-width: 300px;
   background-color: #000;
   color: #fd0800;
   border: 2px solid #fd0800;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  margin: 20px 0;
+  margin: 20px auto;
 }
 
 .error-title {

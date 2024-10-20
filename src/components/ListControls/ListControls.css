@@ -1,3 +1,12 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
 .control {
   background-color: #000;
   color: #ffe81f;

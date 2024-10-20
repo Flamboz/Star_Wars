@@ -24,12 +24,3 @@ ul {
   justify-content: center;
   align-items: center;
 }
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-}
