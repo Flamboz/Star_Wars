@@ -29,6 +29,13 @@
   box-shadow: 0 0 20px rgba(255, 232, 31, 0.6);
 }
 
+@media (max-width: 600px) {
+  .modal__content {
+    max-width: 95vw;
+    min-height: 95vh;
+  }
+}
+
 .modal__close {
   width: 30px;
   height: 30px;
