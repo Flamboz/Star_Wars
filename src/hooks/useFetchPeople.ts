@@ -11,10 +11,15 @@ export const useFetchPeople = () => {
   const [isError, setIsError] = useState(false);
   const [previousURL, setPreviousURL] = useState<string | null>(null);
   const [nextURL, setNextURL] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(() => {
-    const savedPage = localStorage.getItem("currentPage");
-    return savedPage ? parseInt(savedPage, 10) : 1;
-  });
+
+  // Extract the current page from the URL or default to 1
+  const getCurrentPageFromURL = () => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page");
+    return page ? parseInt(page, 10) : 1;
+  };
+
+  const [currentPage, setCurrentPage] = useState(getCurrentPageFromURL());
   const [totalPages, setTotalPages] = useState(0);
 
   const fetchPeopleData = useCallback(async (url: string) => {
@@ -48,22 +53,14 @@ export const useFetchPeople = () => {
     fetchPeopleData(`https://sw-api.starnavi.io/people/?page=${currentPage}`);
   }, [fetchPeopleData, currentPage]);
 
-  useEffect(() => {
-    localStorage.setItem("currentPage", currentPage.toString());
-  }, [currentPage]);
-
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return;
 
-    const pageParam = page === 1 ? "" : `?page=${page}`;
-    fetchPeopleData(`https://sw-api.starnavi.io/people/${pageParam}`);
     setCurrentPage(page);
 
-    if (page === 1) {
-      window.history.replaceState({}, "", "/Star_Wars");
-    } else {
-      window.history.pushState({}, "", pageParam);
-    }
+    // Update the URL with the current page as a query parameter
+    const pageParam = page === 1 ? "" : `?page=${page}`;
+    window.history.pushState({}, "", pageParam);
   };
 
   const handlePrevious = () => {
