@@ -21,6 +21,8 @@ function App() {
     goToPage,
     handlePrevious,
     handleNext,
+    handleFirstPage,
+    handleLastPage,
   } = useFetchPeople();
 
   const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
@@ -31,18 +33,6 @@ function App() {
 
   const handlePersonSelect = (id: number) => {
     setSelectedPersonId(id);
-  };
-
-  const handleFirstPage = () => {
-    if (currentPage > 1) {
-      goToPage(1);
-    }
-  };
-
-  const handleLastPage = () => {
-    if (currentPage < totalPages) {
-      goToPage(totalPages);
-    }
   };
 
   return (

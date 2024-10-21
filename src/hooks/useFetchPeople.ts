@@ -12,7 +12,6 @@ export const useFetchPeople = () => {
   const [previousURL, setPreviousURL] = useState<string | null>(null);
   const [nextURL, setNextURL] = useState<string | null>(null);
 
-  // Extract the current page from the URL or default to 1
   const getCurrentPageFromURL = () => {
     const params = new URLSearchParams(window.location.search);
     const page = params.get("page");
@@ -58,8 +57,7 @@ export const useFetchPeople = () => {
 
     setCurrentPage(page);
 
-    // Update the URL with the current page as a query parameter
-    const pageParam = page === 1 ? "" : `?page=${page}`;
+    const pageParam = `?page=${page}`;
     window.history.pushState({}, "", pageParam);
   };
 
@@ -75,6 +73,18 @@ export const useFetchPeople = () => {
     }
   };
 
+  const handleFirstPage = () => {
+    if (currentPage > 1) {
+      goToPage(1);
+    }
+  };
+
+  const handleLastPage = () => {
+    if (currentPage < totalPages) {
+      goToPage(totalPages);
+    }
+  };
+
   return {
     people,
     isLoading,
@@ -86,5 +96,7 @@ export const useFetchPeople = () => {
     goToPage,
     handlePrevious,
     handleNext,
+    handleFirstPage,
+    handleLastPage,
   };
 };
