@@ -10,20 +10,39 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 // Main application component that fetches and displays Star Wars characters,supports pagination, and shows details in a modal when a character is selected.
 function App() {
-  const { people, isLoading, isError, previousURL, nextURL, fetchPeopleData } =
-    useFetchPeople();
+  const {
+    people,
+    isLoading,
+    isError,
+    previousURL,
+    nextURL,
+    currentPage,
+    totalPages,
+    goToPage,
+    handlePrevious,
+    handleNext,
+  } = useFetchPeople();
+
   const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
 
   const closeModal = () => {
     setSelectedPersonId(null);
   };
 
-  const handlePagination = (url: string | null) => {
-    if (url) fetchPeopleData(url);
-  };
-
   const handlePersonSelect = (id: number) => {
     setSelectedPersonId(id);
+  };
+
+  const handleFirstPage = () => {
+    if (currentPage > 1) {
+      goToPage(1);
+    }
+  };
+
+  const handleLastPage = () => {
+    if (currentPage < totalPages) {
+      goToPage(totalPages);
+    }
   };
 
   return (
@@ -43,8 +62,13 @@ function App() {
             previousURL={previousURL}
             nextURL={nextURL}
             isLoading={isLoading}
-            onPrevious={() => handlePagination(previousURL)}
-            onNext={() => handlePagination(nextURL)}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onFirstPage={handleFirstPage}
+            onLastPage={handleLastPage}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
           />
         </>
       )}

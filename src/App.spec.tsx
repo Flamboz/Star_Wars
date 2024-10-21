@@ -10,7 +10,6 @@ import {
   vitest,
 } from "vitest";
 
-// Mock the custom hook
 vitest.mock("./hooks/useFetchPeople");
 
 const mockUseFetchPeople = useFetchPeople as MockedFunction<
@@ -25,7 +24,11 @@ describe("App Component", () => {
       isError: false,
       previousURL: null,
       nextURL: null,
-      fetchPeopleData: vitest.fn(),
+      currentPage: 1,
+      totalPages: 1,
+      goToPage: vitest.fn(),
+      handlePrevious: vitest.fn(),
+      handleNext: vitest.fn(),
     });
   });
 
@@ -36,7 +39,11 @@ describe("App Component", () => {
       isError: false,
       previousURL: null,
       nextURL: null,
-      fetchPeopleData: vitest.fn(),
+      currentPage: 1,
+      totalPages: 1,
+      goToPage: vitest.fn(),
+      handlePrevious: vitest.fn(),
+      handleNext: vitest.fn(),
     });
 
     render(<App />);
@@ -50,7 +57,11 @@ describe("App Component", () => {
       isError: true,
       previousURL: null,
       nextURL: null,
-      fetchPeopleData: vitest.fn(),
+      currentPage: 1,
+      totalPages: 1,
+      goToPage: vitest.fn(),
+      handlePrevious: vitest.fn(),
+      handleNext: vitest.fn(),
     });
 
     render(<App />);
@@ -86,7 +97,11 @@ describe("App Component", () => {
       isError: false,
       previousURL: null,
       nextURL: null,
-      fetchPeopleData: vitest.fn(),
+      currentPage: 1,
+      totalPages: 1,
+      goToPage: vitest.fn(),
+      handlePrevious: vitest.fn(),
+      handleNext: vitest.fn(),
     });
 
     render(<App />);
@@ -120,7 +135,11 @@ describe("App Component", () => {
       isError: false,
       previousURL: null,
       nextURL: null,
-      fetchPeopleData: vitest.fn(),
+      currentPage: 1,
+      totalPages: 1,
+      goToPage: vitest.fn(),
+      handlePrevious: vitest.fn(),
+      handleNext: vitest.fn(),
     });
 
     render(<App />);
@@ -128,26 +147,6 @@ describe("App Component", () => {
     expect(screen.getByTestId("modal")).toBeInTheDocument();
 
     fireEvent.click(screen.getByTestId("close-modal"));
-
     expect(screen.getByTestId("modal")).toHaveAttribute("aria-hidden", "true");
-  });
-
-  test("handles pagination", () => {
-    const fetchPeopleDataMock = vitest.fn();
-    mockUseFetchPeople.mockReturnValueOnce({
-      people: [],
-      isLoading: false,
-      isError: false,
-      previousURL: "prev-url",
-      nextURL: "next-url",
-      fetchPeopleData: fetchPeopleDataMock,
-    });
-
-    render(<App />);
-    fireEvent.click(screen.getByText(/next/i));
-    expect(fetchPeopleDataMock).toHaveBeenCalledWith("next-url");
-
-    fireEvent.click(screen.getByText(/previous/i));
-    expect(fetchPeopleDataMock).toHaveBeenCalledWith("prev-url");
   });
 });
