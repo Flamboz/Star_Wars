@@ -45,8 +45,7 @@ export const useFetchPeople = () => {
   }, []);
 
   useEffect(() => {
-    const initialPage = currentPage;
-    fetchPeopleData(`https://sw-api.starnavi.io/people/?page=${initialPage}`);
+    fetchPeopleData(`https://sw-api.starnavi.io/people/?page=${currentPage}`);
   }, [fetchPeopleData, currentPage]);
 
   useEffect(() => {
