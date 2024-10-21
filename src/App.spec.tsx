@@ -29,6 +29,8 @@ describe("App Component", () => {
       goToPage: vitest.fn(),
       handlePrevious: vitest.fn(),
       handleNext: vitest.fn(),
+      handleFirstPage: vitest.fn(),
+      handleLastPage: vitest.fn(),
     });
   });
 
@@ -44,6 +46,8 @@ describe("App Component", () => {
       goToPage: vitest.fn(),
       handlePrevious: vitest.fn(),
       handleNext: vitest.fn(),
+      handleFirstPage: vitest.fn(),
+      handleLastPage: vitest.fn(),
     });
 
     render(<App />);
@@ -62,6 +66,8 @@ describe("App Component", () => {
       goToPage: vitest.fn(),
       handlePrevious: vitest.fn(),
       handleNext: vitest.fn(),
+      handleFirstPage: vitest.fn(),
+      handleLastPage: vitest.fn(),
     });
 
     render(<App />);
@@ -102,6 +108,8 @@ describe("App Component", () => {
       goToPage: vitest.fn(),
       handlePrevious: vitest.fn(),
       handleNext: vitest.fn(),
+      handleFirstPage: vitest.fn(),
+      handleLastPage: vitest.fn(),
     });
 
     render(<App />);
@@ -140,6 +148,8 @@ describe("App Component", () => {
       goToPage: vitest.fn(),
       handlePrevious: vitest.fn(),
       handleNext: vitest.fn(),
+      handleFirstPage: vitest.fn(),
+      handleLastPage: vitest.fn(),
     });
 
     render(<App />);
