@@ -20,17 +20,18 @@ const PeopleList: React.FC<PeopleListProps> = ({
     <ul className="list">
       {people.map((person) => {
         return (
-          <li
-            className="list__person"
-            key={person.id}
-            onClick={() => handleClick(person)}
-          >
-            <img
-              className="list__person-image"
-              src={`https://starwars-visualguide.com/assets/img/characters/${person.id}.jpg`}
-              alt={person.name}
-            />
-            <p className="list__person-name">{person.name}</p>
+          <li className="list__person" key={person.id}>
+            <button
+              className="list__person-button"
+              onClick={() => handleClick(person)}
+            >
+              <img
+                className="list__person-image"
+                src={`https://starwars-visualguide.com/assets/img/characters/${person.id}.jpg`}
+                alt={person.name}
+              />
+              <p className="list__person-name">{person.name}</p>
+            </button>
           </li>
         );
       })}

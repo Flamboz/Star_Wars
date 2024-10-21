@@ -8,9 +8,15 @@
 
 .list__person {
   width: calc(20% - 1rem);
-  background-color: #1d1e1f;
-  cursor: pointer;
   border-radius: 1rem;
+  background-color: #1d1e1f;
+}
+
+.list__person-button {
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 .list__person-image {
