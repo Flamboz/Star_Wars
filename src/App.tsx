@@ -8,6 +8,7 @@ import Graph from "./components/Graph/Graph";
 import ListControls from "./components/ListControls/ListControls";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
+// Main application component that fetches and displays Star Wars characters,supports pagination, and shows details in a modal when a character is selected.
 function App() {
   const { people, isLoading, isError, previousURL, nextURL, fetchPeopleData } =
     useFetchPeople();

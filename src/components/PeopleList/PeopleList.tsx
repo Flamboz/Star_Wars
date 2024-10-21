@@ -6,6 +6,8 @@ interface PeopleListProps {
   setSelectedPersonId: (id: number) => void;
 }
 
+// PeopleList component: Renders a list of Star Wars characters.
+// Users can select a character by clicking on their card. It updates the selected person's ID via the `setSelectedPersonId` prop.
 const PeopleList: React.FC<PeopleListProps> = ({
   people,
   setSelectedPersonId,

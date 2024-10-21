@@ -6,6 +6,8 @@ interface CustomNodeProps {
   data: NodeData;
 }
 
+// CustomNode component: Represents a custom node in the React Flow graph, displaying character details along with an image. 
+// It includes input and output handles for connections to other nodes.
 const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
   return (
     <div className="node">

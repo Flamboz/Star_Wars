@@ -8,6 +8,8 @@ interface ListControlsProps {
   onNext: () => void;
 }
 
+// ListControls component: Provides navigation controls for paginated lists,allowing users to navigate to the previous or next set of items. 
+// Buttons are disabled when there is no available URL for navigation or while loading.
 const ListControls: React.FC<ListControlsProps> = ({
   previousURL,
   nextURL,

@@ -8,6 +8,9 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
+// Modal component: Displays a modal dialog that can be opened or closed.
+// It listens for the Escape key and clicks outside the modal content to trigger the close action.
+// The modal's visibility is controlled by the `isModalOpen` prop, and it accepts children for customizable content.
 const Modal: React.FC<ModalProps> = ({ isModalOpen, onClose, children }) => {
   const closeModal = useCallback(() => onClose(), [onClose]);
 

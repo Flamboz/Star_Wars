@@ -15,6 +15,9 @@ interface GraphProps {
   people: Person[];
 }
 
+// Graph component: Renders a visual representation of relationships between Star Wars characters and their corresponsing films and starships.
+// It fetches details based on the selected person(=character) and displays a loading indicator or an error message as needed.
+// Once data is available, it uses React Flow to display custom nodes and edges
 const Graph: React.FC<GraphProps> = ({ selectedPersonId, people }) => {
   const { person, films, starships, isDetailsLoading, isDetailsError } =
     useFetchDetails(selectedPersonId, people);

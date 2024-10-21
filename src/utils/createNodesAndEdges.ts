@@ -1,5 +1,10 @@
 import { Film, Person, Starship } from "../types";
 
+// createNodesAndEdges function: Generates nodes and edges for a graph visualization of a Star Wars character, their films and starships.
+// The function takes a character, films, and starships as input and returns an object containing the nodes and edges for rendering in React Flow.
+// Each node represents a character, film, or starship, containing relevant information and image URLs.
+// The nodes are positioned based on the window size and have specific offsets for spacing.
+// Edges are created to connect the character to their films and the films to their respective starships.
 export const createNodesAndEdges = (
   char: Person | null,
   films: Film[] | null,
@@ -9,7 +14,7 @@ export const createNodesAndEdges = (
 
   const modalWidth = window.innerWidth * 0.8;
   const centerX = modalWidth / 2;
-  const magicNumber = 300;
+  const offset = 300;
   const spacing = 600;
 
   const nodes = [
@@ -50,7 +55,7 @@ export const createNodesAndEdges = (
         imageUrl: `https://starwars-visualguide.com/assets/img/films/${film.id}.jpg`,
       },
       position: {
-        x: centerX - magicNumber * (films.length - 1) + index * spacing,
+        x: centerX - offset * (films.length - 1) + index * spacing,
         y: 400,
       },
     })),
@@ -72,7 +77,7 @@ export const createNodesAndEdges = (
         imageUrl: `https://starwars-visualguide.com/assets/img/starships/${starship.id}.jpg`,
       },
       position: {
-        x: centerX - magicNumber * (starships.length - 1) + index * spacing,
+        x: centerX - offset * (starships.length - 1) + index * spacing,
         y: 800,
       },
     })),

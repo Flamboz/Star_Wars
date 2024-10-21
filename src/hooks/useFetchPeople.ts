@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Person } from "../types";
 
+// useFetchPeople hook: Fetches a list of Star Wars characters.
+// Manages loading and error states, and provides pagination with previous and next URLs.
+// Returns the fetched people, loading status, error status, and pagination URLs.
 export const useFetchPeople = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);

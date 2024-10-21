@@ -5,6 +5,9 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// useFetchDetails hook: Fetches details for a selected Star Wars character, including films and starships.
+// It manages loading and error states, delays requests for characters with more than 4 films, and returns the fetched data along with loading and error status.
+// Delay is added due to the limitation of sending too many requests to api
 export const useFetchDetails = (
   selectedPersonId: number | null,
   people: Person[]

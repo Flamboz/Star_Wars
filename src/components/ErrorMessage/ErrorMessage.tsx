@@ -1,5 +1,6 @@
 import "./ErrorMessage.css";
 
+// ErrorMessage component: Renders an error message with a reload button to inform users that something went wrong and allows them to retry loading the page.
 const ErrorMessage: React.FC = () => {
   return (
     <div className="error-message">
